@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CommentService {
     CommentResponseDTO addComment(CommentRequestDTO requestDTO);
-    List<CommentResponseDTO> getCommentsByPostId(String postId);
-    void deleteComment(Long id);
+    List<CommentResponseDTO> getCommentsByPostId(Long postId);
+    void deleteComment(String id);
 }

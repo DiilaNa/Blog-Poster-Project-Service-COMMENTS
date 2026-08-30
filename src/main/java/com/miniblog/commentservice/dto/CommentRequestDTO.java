@@ -1,7 +1,7 @@
 package com.miniblog.commentservice.dto;
 
 public class CommentRequestDTO {
-    private String postId;
+    private Long postId;
     private Long userId;
     private String userName;
     private String content;
@@ -9,7 +9,7 @@ public class CommentRequestDTO {
     // Constructors
     public CommentRequestDTO() {}
 
-    public CommentRequestDTO(String postId, Long userId, String userName, String content) {
+    public CommentRequestDTO(Long postId, Long userId, String userName, String content) {
         this.postId = postId;
         this.userId = userId;
         this.userName = userName;
@@ -17,8 +17,8 @@ public class CommentRequestDTO {
     }
 
     // Getters and Setters
-    public String getPostId() { return postId; }
-    public void setPostId(String postId) { this.postId = postId; }
+    public Long getPostId() { return postId; }
+    public void setPostId(Long postId) { this.postId = postId; }
 
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
