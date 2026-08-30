@@ -1,38 +1,51 @@
 package com.miniblog.commentservice.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Document(collection = "comments")
+@Entity
+@Table(name = "comments")
 public class Comment {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "post_id", nullable = false)
     private Long postId;
+
+    @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    @Column(name = "user_name", nullable = false)
     private String userName;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    // Constructors
-    public Comment() {
+    @PrePersist
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Comment(String id, Long postId, Long userId, String userName, String content, LocalDateTime createdAt) {
+    // Constructors
+    public Comment() {}
+
+    public Comment(Long id, Long postId, Long userId, String userName, String content, LocalDateTime createdAt) {
         this.id = id;
         this.postId = postId;
         this.userId = userId;
         this.userName = userName;
         this.content = content;
-        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.createdAt = createdAt;
     }
 
     // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public Long getPostId() { return postId; }
     public void setPostId(Long postId) { this.postId = postId; }

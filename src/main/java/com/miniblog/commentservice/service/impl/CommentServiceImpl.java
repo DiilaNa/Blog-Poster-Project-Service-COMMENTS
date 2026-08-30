@@ -8,11 +8,13 @@ import com.miniblog.commentservice.model.Comment;
 import com.miniblog.commentservice.repository.CommentRepository;
 import com.miniblog.commentservice.service.CommentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
@@ -31,6 +33,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentResponseDTO> getCommentsByPostId(Long postId) {
         return commentRepository.findByPostIdOrderByCreatedAtDesc(postId).stream()
                 .map(commentMapper::toResponseDTO)
@@ -38,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(String id) {
+    public void deleteComment(Long id) {
         if (!commentRepository.existsById(id)) {
             throw new CommentNotFoundException("Comment not found with ID: " + id);
         }
